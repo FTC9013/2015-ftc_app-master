@@ -26,8 +26,8 @@ public class TeleOp extends OpMode {
         double leftDrivePower=0;
         double rightDrivePower=0;
 
-        leftDrivePower = Range.clip(leftStick,-1,1);
-        rightDrivePower = Range.clip(rightStick,-1,1);
+        leftDrivePower = Range.clip(rightStick,-1,1);
+        rightDrivePower = Range.clip(leftStick,-1,1);
 
         leftMotor.setPower(leftDrivePower);
         rightMotor.setPower(rightDrivePower);
