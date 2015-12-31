@@ -158,7 +158,7 @@ public class PushBotHardwareSensors extends PushBotTelemetry
     //
     /**
      * Apply upward power to the arm motor until the touch sensor is pressed.
-     */
+     *
     boolean move_arm_upward_until_touch ()
 
     {

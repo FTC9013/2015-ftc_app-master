@@ -247,7 +247,7 @@ public class PushBotAutoSensors extends PushBotTelemetrySensors
                 //
                 // Begin the next state.  Open the claw.
                 //
-                open_hand ();
+//                open_hand ();
 
                 //
                 // Transition.
@@ -317,15 +317,15 @@ public class PushBotAutoSensors extends PushBotTelemetrySensors
                 // triggered, then the arm will stop and this call will perform
                 // no action.  If the touch sensor has not been triggered, then
                 // motor power will still be applied.
-                //
-                if (move_arm_upward_until_touch ())
-                {
-                    //
-                    // Transition to the stop state.
-                    //
-                    v_arm_state++;
-                }
-                break;
+//                //
+//                if (move_arm_upward_until_touch ())
+//                {
+//                    //
+//                    // Transition to the stop state.
+//                    //
+//                    v_arm_state++;
+//                }
+               break;
             //
             // Perform no action - stay in this case until the OpMode is
             // stopped.  This method will still be called regardless of the

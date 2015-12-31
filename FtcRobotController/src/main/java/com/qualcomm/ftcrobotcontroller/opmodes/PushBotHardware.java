@@ -104,7 +104,7 @@ public class PushBotHardware extends OpMode
             v_motor_right_drive = null;
         }
 
-        //
+        /*
         // Connect the arm motor.
         //
         try
@@ -152,6 +152,7 @@ public class PushBotHardware extends OpMode
 
             v_servo_right_hand = null;
         }
+        */
 
     } // init
 
@@ -872,7 +873,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Access the left arm motor's power level.
-     */
+     *
     double a_left_arm_power ()
     {
         double l_return = 0.0;
@@ -885,14 +886,14 @@ public class PushBotHardware extends OpMode
         return l_return;
 
     } // a_left_arm_power
-
+      */
     //--------------------------------------------------------------------------
     //
     // m_left_arm_power
     //
     /**
      * Access the left arm motor's power level.
-     */
+     *
     void m_left_arm_power (double p_level)
     {
         if (v_motor_left_arm != null)
@@ -908,7 +909,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Access the hand position.
-     */
+     *
     double a_hand_position ()
     {
         double l_return = 0.0;
@@ -928,7 +929,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Mutate the hand position.
-     */
+     *
     void m_hand_position (double p_position)
     {
         //
@@ -961,7 +962,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Open the hand to its fullest.
-     */
+     *
     void open_hand ()
 
     {
@@ -1022,7 +1023,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Manage the aspects of the left arm motor.
-     */
+     *
     private DcMotor v_motor_left_arm;
 
     //--------------------------------------------------------------------------
@@ -1031,7 +1032,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Manage the aspects of the left hand servo.
-     */
+     *
     private Servo v_servo_left_hand;
 
     //--------------------------------------------------------------------------
@@ -1040,7 +1041,7 @@ public class PushBotHardware extends OpMode
     //
     /**
      * Manage the aspects of the right hand servo.
-     */
+     *
     private Servo v_servo_right_hand;
-
+     */
 } // PushBotHardware

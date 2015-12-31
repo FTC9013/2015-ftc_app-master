@@ -94,85 +94,85 @@ public class PushBotManualSensors extends PushBotTelemetrySensors
         // human hand can only react so fast...this loop will be called multiple
         // times before the button is released.
         //
-        if (gamepad2.y)
-        {
-            //
-            // If the button has been pressed from a previous iteration, then
-            // do not set power to the arm once the touch sensor has been
-            // triggered.
-            //
-            if (!v_raise_arm_automatically)
-            {
-                v_raise_arm_automatically = true;
-            }
-        }
-
-        //
-        // Has the user commanded the arm to be raised until the touch sensor
-        // has been pressed?
-        //
-        float l_gp2_left_stick_y = -gamepad2.left_stick_y;
-        float l_arm_command = 0.0f;
-        if (v_raise_arm_automatically)
-        {
-            //
-            // Has the touch sensor been triggered? Or has the user cancelled
-            // the operation with the joystick?
-            //
-            l_arm_command = 1.0f;
-            if ((is_touch_sensor_pressed ()) ||
-                (Math.abs (l_gp2_left_stick_y) > 0.8)
-                )
-            {
-                //
-                // Stop moving the arm.
-                //
-                l_arm_command = 0.0f;
-                v_raise_arm_automatically = false;
-            }
-        }
-        //
-        // The user has not commanded the use of the touch sensor.  Apply power
-        // to the arm motor according to the joystick value.
-        //
-        else
-        {
-            v_raise_arm_automatically = false;
-
-            l_arm_command = (float)scale_motor_power (l_gp2_left_stick_y);
-        }
-        m_left_arm_power (l_arm_command);
-
-        //----------------------------------------------------------------------
-        //
-        // Servo Motors
-        //
-        // Obtain the current values of the gamepad 'x' and 'b' buttons.
-        //
-        // Note that x and b buttons have boolean values of true and false.
-        //
-        // The clip method guarantees the value never exceeds the allowable range of
-        // [0,1].
-        //
-        // The setPosition methods write the motor power values to the Servo
-        // class, but the positions aren't applied until this method ends.
-        //
-        if (gamepad2.x)
-        {
-            m_hand_position (a_hand_position () + 0.05);
-        }
-        else if (gamepad2.b)
-        {
-            m_hand_position (a_hand_position () - 0.05);
-        }
-
-        //
-        // Send telemetry data to the driver station.
-        //
-        update_telemetry (); // Update common telemetry
-        telemetry.addData ("18", "Raise Arm: " + v_raise_arm_automatically);
-        telemetry.addData ("19", "Left arm command: " + l_arm_command);
-
+//        if (gamepad2.y)
+//        {
+//            //
+//            // If the button has been pressed from a previous iteration, then
+//            // do not set power to the arm once the touch sensor has been
+//            // triggered.
+//            //
+//            if (!v_raise_arm_automatically)
+//            {
+//                v_raise_arm_automatically = true;
+//            }
+//        }
+//
+//        //
+//        // Has the user commanded the arm to be raised until the touch sensor
+//        // has been pressed?
+//        //
+//        float l_gp2_left_stick_y = -gamepad2.left_stick_y;
+//        float l_arm_command = 0.0f;
+//        if (v_raise_arm_automatically)
+//        {
+//            //
+//            // Has the touch sensor been triggered? Or has the user cancelled
+//            // the operation with the joystick?
+//            //
+//            l_arm_command = 1.0f;
+//            if ((is_touch_sensor_pressed ()) ||
+//                (Math.abs (l_gp2_left_stick_y) > 0.8)
+//                )
+//            {
+//                //
+//                // Stop moving the arm.
+//                //
+//                l_arm_command = 0.0f;
+//                v_raise_arm_automatically = false;
+//            }
+//        }
+//        //
+//        // The user has not commanded the use of the touch sensor.  Apply power
+//        // to the arm motor according to the joystick value.
+//        //
+//        else
+//        {
+//            v_raise_arm_automatically = false;
+//
+//            l_arm_command = (float)scale_motor_power (l_gp2_left_stick_y);
+//        }
+//        m_left_arm_power (l_arm_command);
+//
+//        //----------------------------------------------------------------------
+//        //
+//        // Servo Motors
+//        //
+//        // Obtain the current values of the gamepad 'x' and 'b' buttons.
+//        //
+//        // Note that x and b buttons have boolean values of true and false.
+//        //
+//        // The clip method guarantees the value never exceeds the allowable range of
+//        // [0,1].
+//        //
+//        // The setPosition methods write the motor power values to the Servo
+//        // class, but the positions aren't applied until this method ends.
+//        //
+//        if (gamepad2.x)
+//        {
+//            m_hand_position (a_hand_position () + 0.05);
+//        }
+//        else if (gamepad2.b)
+//        {
+//            m_hand_position (a_hand_position () - 0.05);
+//        }
+//
+//        //
+//        // Send telemetry data to the driver station.
+//        //
+//        update_telemetry (); // Update common telemetry
+//        telemetry.addData ("18", "Raise Arm: " + v_raise_arm_automatically);
+//        telemetry.addData ("19", "Left arm command: " + l_arm_command);
+//
     } // loop
 
     //--------------------------------------------------------------------------
@@ -185,6 +185,6 @@ public class PushBotManualSensors extends PushBotTelemetrySensors
     // released to avoid the phenomena where a humans hand holds the button for
     // multiple iterations of the loop method.
     //--------
-    private boolean v_raise_arm_automatically = false;
+//    private boolean v_raise_arm_automatically = false;
 
 } // PushBotManualSensors

@@ -82,8 +82,8 @@ public class PushBotManual extends PushBotTelemetry
         //
         // Manage the arm motor.
         //
-        float l_left_arm_power = scale_motor_power (-gamepad2.left_stick_y);
-        m_left_arm_power (l_left_arm_power);
+//        float l_left_arm_power = scale_motor_power (-gamepad2.left_stick_y);
+//        m_left_arm_power (l_left_arm_power);
 
         //----------------------------------------------------------------------
         //
@@ -99,20 +99,19 @@ public class PushBotManual extends PushBotTelemetry
         // The setPosition methods write the motor power values to the Servo
         // class, but the positions aren't applied until this method ends.
         //
-        if (gamepad2.x)
-        {
-            m_hand_position (a_hand_position () + 0.05);
-        }
-        else if (gamepad2.b)
-        {
-            m_hand_position (a_hand_position () - 0.05);
-        }
-
-        //
-        // Send telemetry data to the driver station.
-        //
-        update_telemetry (); // Update common telemetry
-        update_gamepad_telemetry ();
+//        if (gamepad2.x)
+//        {
+//            m_hand_position (a_hand_position () + 0.05);//       }
+//        else if (gamepad2.b)
+//        {
+//            m_hand_position (a_hand_position () - 0.05);
+//        }
+//
+//        //
+//        // Send telemetry data to the driver station.
+//        //
+//        update_telemetry (); // Update common telemetry
+//        update_gamepad_telemetry ();
 
     } // loop
 
