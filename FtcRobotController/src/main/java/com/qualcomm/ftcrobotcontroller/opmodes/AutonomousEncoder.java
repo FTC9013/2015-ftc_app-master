@@ -25,6 +25,19 @@ public class AutonomousEncoder extends PushBotTelemetry
 
     //--------------------------------------------------------------------------
     //
+    // v_state
+    //
+    /**
+     * This class member remembers which state is currently active.  When the
+     * start method is called, the state will be initialized (0).  When the loop
+     * starts, the state will change from initialize to state_1.  When state_1
+     * actions are complete, the state will change to state_2.  This implements
+     * a state machine for the loop method.
+     */
+     private int v_state = 0;
+
+    //--------------------------------------------------------------------------
+    //
     // start
     //
     /**
@@ -83,7 +96,7 @@ public class AutonomousEncoder extends PushBotTelemetry
 
                 break;
             //
-            // Drive forward until the encoders exceed the specified values.
+            // Drive forward straight until the encoders exceed the specified values.
             //
             case 1:
                 //
@@ -104,7 +117,7 @@ public class AutonomousEncoder extends PushBotTelemetry
                 // If they haven't, then the op-mode remains in this state (i.e this
                 // block will be executed the next time this method is called).
                 //
-                if (have_drive_encoders_reached (2000, 2000))
+                if (have_drive_encoders_reached (18400d, 18400d))
                 {
                     //
                     // Stop the motors.
@@ -133,12 +146,12 @@ public class AutonomousEncoder extends PushBotTelemetry
                 }
                 break;
             //
-            // Turn left until the encoders exceed the specified values.
+            // Turn left 90 deg.
             //
             case 3:
                 run_using_encoders ();
                 set_drive_power (-0.5f, 0.5f);
-                if (have_drive_encoders_reached (2500, 2500))
+                if (have_drive_encoders_reached (2750, 2750))
                 {
                     reset_drive_encoders ();
                     set_drive_power (0.0f, 0.0f);
@@ -155,31 +168,136 @@ public class AutonomousEncoder extends PushBotTelemetry
                 }
                 break;
             //
-            // straight until the encoders exceed the specified values.
+            // straight 3' .
             //
-//            case 5:
-//                run_using_encoders ();
-//                set_drive_power (-0.5f, -0.5f);
-//                if (have_drive_encoders_reached (750, 750))
-//                {
-//                    reset_drive_encoders ();
-//                    set_drive_power (0.0f, 0.0f);
-//                    v_state++;
-//                }
-//                break;
-//            //
-//            // Wait...
-//            //
             case 5:
+                run_using_encoders ();
+                set_drive_power (-0.5f, -0.5f);
+                if (have_drive_encoders_reached (8000, 8000))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 6:
                 if (have_drive_encoders_reset ())
                 {
                     v_state++;
                 }
                 break;
             //
+            // Turn left appx 45 deg.
+            case 7:
+                run_using_encoders ();
+                set_drive_power (-0.5f, 0.5f);
+                if (have_drive_encoders_reached (1300, 1300))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 8:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                break;
+            //
+            // drive straight appx 42"
+            case 9:
+                run_using_encoders ();
+                set_drive_power (-0.5f, -0.5f);
+                if (have_drive_encoders_reached (9400, 9400))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 10:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                break;
+            //
+            // back up appx 33"
+            case 11:
+                run_using_encoders ();
+                set_drive_power (0.5f, 0.5f);
+                if (have_drive_encoders_reached (7400, 7400))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 12:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                break;
+            //
+            // turn right appx 45 deg.
+            case 13:
+                run_using_encoders ();
+                set_drive_power (0.5f, -0.5f);
+                if (have_drive_encoders_reached (1300, 1300))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 14:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                break;
+            // drive straight 48"
+            case 15:
+                run_using_encoders ();
+                set_drive_power (-0.5f, -0.5f);
+                if (have_drive_encoders_reached (9900, 9900))
+                {
+                    reset_drive_encoders ();
+                    set_drive_power (0.0f, 0.0f);
+                    v_state++;
+                }
+                break;
+            //
+            // Wait...
+            //
+            case 16:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                break;
+            //
+            //
             // Perform no action - stay in this case until the OpMode is stopped.
             // This method will still be called regardless of the state machine.
-            //
+
             default:
                 //
                 // The autonomous actions have been accomplished (i.e. the state has
@@ -196,17 +314,5 @@ public class AutonomousEncoder extends PushBotTelemetry
 
     } // loop
 
-    //--------------------------------------------------------------------------
-    //
-    // v_state
-    //
-    /**
-     * This class member remembers which state is currently active.  When the
-     * start method is called, the state will be initialized (0).  When the loop
-     * starts, the state will change from initialize to state_1.  When state_1
-     * actions are complete, the state will change to state_2.  This implements
-     * a state machine for the loop method.
-     */
-    private int v_state = 0;
 
 } // AutonomousEncoder
