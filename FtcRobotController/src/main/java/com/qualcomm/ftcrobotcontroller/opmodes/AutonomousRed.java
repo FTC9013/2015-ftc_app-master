@@ -2,8 +2,13 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 //------------------------------------------------------------------------------
 //
-// AutonomousEncoder
+// AutonomousRed
 //
+
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.robotcore.util.Range;
+
 /**
  * Provide autonomous operation that uses the left and rightdrive motors
  * and associated encoders implemented using a state machine for
@@ -11,17 +16,33 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
  *
  */
 
-public class AutonomousEncoder extends PushBotTelemetry
+public class AutonomousRed extends PushBotTelemetry
 
 {
     //--------------------------------------------------------------------------
     //
-    // AutonomousEncoder
+    // AutonomousRed
     //
-    public AutonomousEncoder ()
+    public AutonomousRed ()
 
     {
-    } // AutonomousEncoder
+    } // AutonomousRed
+
+    final static double ARM_MIN_RANGE  = 0.00;
+    final static double ARM_MAX_RANGE  = 1.00;
+    final static double BUCKET_HOLD  = 0.00;
+    final static double BUCKET_DUMP  = 1.00;
+
+
+    public Servo bucket;
+    public Servo arm;
+
+    // position of the arm servo.
+    double armPosition;
+
+    // amount to change the arm servo position.
+    double armDelta = 0.005;
+
 
     //--------------------------------------------------------------------------
     //
@@ -34,7 +55,7 @@ public class AutonomousEncoder extends PushBotTelemetry
      * actions are complete, the state will change to state_2.  This implements
      * a state machine for the loop method.
      */
-     private int v_state = 0;
+    private int v_state = 0;
 
     //--------------------------------------------------------------------------
     //
@@ -57,6 +78,15 @@ public class AutonomousEncoder extends PushBotTelemetry
         // Reset the motor encoders on the drive wheels.
         //
         reset_drive_encoders ();
+
+        arm = hardwareMap.servo.get("arm");
+        bucket = hardwareMap.servo.get("bucket");
+
+        // assign the starting position of the arm and bucket variables
+        // Retract the arm
+        arm.setPosition(ARM_MIN_RANGE);
+        // Set the bucket
+        bucket.setPosition(BUCKET_HOLD);
 
     } // start
 
@@ -236,7 +266,7 @@ public class AutonomousEncoder extends PushBotTelemetry
             case 11:
                 run_using_encoders ();
                 set_drive_power (0.5f, 0.5f);
-                if (have_drive_encoders_reached (7400, 7400))
+                if (have_drive_encoders_reached (7200, 7200))
                 {
                     reset_drive_encoders ();
                     set_drive_power (0.0f, 0.0f);
@@ -294,9 +324,31 @@ public class AutonomousEncoder extends PushBotTelemetry
                 }
                 break;
             //
+            case 17:
+                // update the position of the arm.
+                if (armPosition < ARM_MAX_RANGE-0.01) {
+                    // slowly step arm around
+                    // Extend the arm
+                    arm.setPosition(armPosition += armDelta);
+                }
+                else {
+                    v_state++;
+                }
+                break;
+
+            //  dump
+            case 18:
+
+                // Dump the bucket
+                bucket.setPosition(BUCKET_DUMP);
+
+                break;
+            //
             //
             // Perform no action - stay in this case until the OpMode is stopped.
             // This method will still be called regardless of the state machine.
+            // Wait...
+            //
 
             default:
                 //
@@ -315,4 +367,4 @@ public class AutonomousEncoder extends PushBotTelemetry
     } // loop
 
 
-} // AutonomousEncoder
+} // AutonomousRed
